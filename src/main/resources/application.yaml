@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: camel-viacep-app
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 10000
+            loggerLevel: basic
+          viacep:
+            connectTimeout: 3000
+            readTimeout: 5000
+            loggerLevel: full
+viacep:
+  api:
+    url: https://viacep.com.br/ws
+
+camel:
+  springboot:
+    name: CamelViaCepApplication
+    main-run-controller: true
+    jmx-enabled: true
+  servlet:
+    mapping:
+      context-path: /api/*
+
+logging:
+  level:
+    com.mrsalustiano.spring.camel: DEBUG
+    org.apache.camel: INFO
+    feign: DEBUG
+
+springdoc:
+  swagger-ui:
+    url: /openapi.yaml
+    disable-swagger-default-url: true
+  api-docs:
+    enabled: false   # evita gerar /v3/api-docs e possíveis conflitos

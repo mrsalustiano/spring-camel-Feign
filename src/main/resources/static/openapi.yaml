@@ -1,0 +1,119 @@
+openapi: 3.0.1
+info:
+  title: ViaCEP API Proxy
+  description: API de consulta de endereços usando ViaCEP via Camel + Feign
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8080/api
+    description: Servidor local
+
+paths:
+  /cep/{cep}:
+    get:
+      summary: Consulta endereço por CEP
+      description: Recupera informações de endereço a partir de um CEP válido.
+      operationId: PesquisaCEP
+      tags:
+        - ViaCEP
+      parameters:
+        - name: cep
+          in: path
+          required: true
+          description: CEP no formato 01001-000 ou 01001000
+          schema:
+            type: string
+            example: "01001-000"
+      responses:
+        "200":
+          description: Endereço encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endereco'
+        "400":
+          description: CEP inválido ou mal formatado
+        "404":
+          description: CEP não encontrado
+        "500":
+          description: Erro interno do servidor
+
+  /endereco/{uf}/{cidade}/{logradouro}:
+    get:
+      summary: Busca endereço detalhado por CEP
+      description: Endpoint alternativo para consulta de CEP via rota Camel.
+      operationId: PesquisaEndereco
+      tags:
+        - ViaCEP
+      parameters:
+        - name: uf
+          in: path
+          required: true
+          description: UF
+          schema:
+            type: string
+            example: "PR"
+        - name: cidade
+          in: path
+          required: true
+          description: Nome da cidade
+          schema:
+            type: string
+            example: "Curitiba"
+        - name: logradouro
+          in: path
+          required: true
+          description: Nome do logradouro
+          schema:
+            type: string
+            example: "Brasil"
+
+      responses:
+        "200":
+          description: Endereço encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endereco'
+        "400":
+          description: CEP inválido ou mal formatado
+        "404":
+          description: CEP não encontrado
+        "500":
+          description: Erro interno do servidor
+
+components:
+  schemas:
+    Endereco:
+      type: object
+      properties:
+        cep:
+          type: string
+          example: "01001-000"
+        logradouro:
+          type: string
+          example: "Praça da Sé"
+        complemento:
+          type: string
+          example: "lado ímpar"
+        bairro:
+          type: string
+          example: "Sé"
+        localidade:
+          type: string
+          example: "São Paulo"
+        uf:
+          type: string
+          example: "SP"
+        ibge:
+          type: string
+          example: "3550308"
+        gia:
+          type: string
+          example: "1004"
+        ddd:
+          type: string
+          example: "11"
+        siafi:
+          type: string
+          example: "7107"

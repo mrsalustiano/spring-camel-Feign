@@ -1,0 +1,43 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: camel-viacep-app-test
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 1000
+            readTimeout: 2000
+            loggerLevel: none
+          viacep:
+            connectTimeout: 1000
+            readTimeout: 2000
+            loggerLevel: none
+
+camel:
+  springboot:
+    name: CamelViaCepApplicationTest
+    main-run-controller: true
+    jmx-enabled: false
+  servlet:
+    mapping:
+      context-path: /api/*
+
+logging:
+  level:
+    com.example: DEBUG
+    org.apache.camel: WARN
+    feign: WARN
+    org.springframework.web: WARN
+    org.springframework.boot.test: WARN
+    com.github.tomakehurst.wiremock: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Desabilita métricas e actuator para testes
+management:
+  endpoints:
+    enabled-by-default: false
