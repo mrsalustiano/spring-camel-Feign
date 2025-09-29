@@ -19,7 +19,7 @@ A API foi documentada em **OpenAPI 3** e integrada ao **Swagger UI**.
 ## 🚀 Endpoints Principais
 
 - `GET /api/cep/{cep}` → consulta um endereço por CEP.  
-- `GET /api/endereco/{cep}` → rota alternativa usando Camel para consulta de endereço.  
+- `GET /api/endereco/{uf}/{cidade}/{logradouro}` → rota alternativa usando Camel para consulta de endereço.  
 - **Documentação OpenAPI**:
   - Arquivo estático: [`/openapi.yaml`](src/main/resources/static/openapi.yaml)  
   - Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
